@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Cancún antes de Cancún: Una historia de planeación urbana</title>
+    
+        <!-- Meta descripción (SEO) -->
+        <meta name="description" content="Scrollytelling interactivo que cuenta la historia de Cancún desde sus orígenes como idea cartográfica hasta su construcción como ciudad planificada. Explora cómo los arquitectos Landa Verdugo transformaron la arena en comunidad.">
+        <meta name="robots" content="index, follow">
+        <meta name="author" content="IMPLAN Cancún">
+
+        <!-- Canonical -->
+        <link rel="canonical" href="">
+
+        <!-- Open Graph (Social) -->
+        <meta property="og:type" content="website">
+        <meta property="og:locale" content="es_ES">
+        <meta property="og:title" content="Cancún antes de Cancún: Una historia de planeación urbana">
+        <meta property="og:description" content="Explora la transformación de Cancún desde una ficción cartográfica hasta una ciudad moderno planificada. Una narrativa visual sobre arquitectura, territorio y comunidad.">
+        <meta property="og:url" content="">
+        <meta property="og:image" content="assets/1.png">
+
+        <!-- Twitter Cards -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Cancún antes de Cancún: Una historia de planeación urbana">
+        <meta name="twitter:description" content="Del papel a la realidad: cómo una idea de desarrollo turístico se convirtió en una ciudad moderna. Descubre los orígenes de Cancún en este scrollytelling interactivo.">
+        <meta name="twitter:image" content="assets/1.png">
+
+        <!-- JSON-LD (Schema.org) para WebPage -->
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "Cancún antes de Cancún: Una historia de planeación urbana",
+            "url": "",
+            "inLanguage": "es",
+            "description": "Scrollytelling interactivo que narra la transformación de Cancún desde sus orígenes como idea cartográfica hasta su construcción como ciudad moderna planificada por los arquitectos Landa Verdugo.",
+            "isPartOf": {
+                "@type": "WebSite",
+                "name": "IMPLAN Cancún",
+                "url": ""
+            },
+            "author": {
+                "@type": "Organization",
+                "name": "IMPLAN Cancún",
+                "url": ""
+            }
+        }
+        </script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+
+    <script src="https://unpkg.com/scrollama" defer></script>
+    <script src="dist/main.nomap.min.js" defer></script>
+    <style>
+        * { box-sizing: border-box; }
+
+        /* Aplicar Montserrat a todos los títulos del sitio */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+        }
+
+        #map {
+            display: none !important;
+        }
+        
+        body { 
+            margin: 0; 
+            padding: 0; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        /* Estilo específico para step 1 con video */
+        section[data-step="1"] {
+            background: none !important;
+        }
+        
+        section[data-step="1"]::before,
+        section[data-step="1"]::after {
+            display: none !important;
+        }
+        
+        
+        /* Estilos para el scrollytelling */
+        #scroller {
+            position: relative;
+            z-index: 1;
+            background: transparent;
+        }
+        
+        .step {
+            margin: 0;
+            padding: 100px 50px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        /* Estilos especiales para los steps de años urbanos */
+        .step.urban-year-image {
+            padding: 0 !important;
+            margin: 0 !important;
+            background: transparent !important;
+            z-index: 2;
+            color: transparent !important;
+        }
+        
+        /* Estilo del contenido de texto*/
+        .step-content {
+            font-size: 24px;
+            font-weight: normal;
+            text-shadow: none;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .step-content h1 {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            text-shadow: none;
+            color: #000000;
+            text-align: center;
+        }
+        
+        .step-content h2 {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 25px;
+            text-shadow: none;
+            color: #000000;
+            text-align: center;
+        }
+        
+        .step-content p {
+            margin-bottom: 20px;
+            font-size: 20px;
+            color: #000000;
+        }
+        
+        .step-content strong {
+            font-weight: 700;
+            text-shadow: none;
+            color: #000000;
+        }
+        
+        /* Transición de imágenes para la evolución urbana */
+        .urban-evolution-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: 0;
+        }
+        
+        .urban-evolution-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .urban-evolution-image.active {
+            opacity: 1;
+        }
+
+        /* Estilos específicos para las imágenes de evolución urbana */
+        .urban-year-image {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            background: transparent !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Contenedor de fondo para evolución urbana */
+        #urban-evolution-background {
+            pointer-events: none;
+            background-color: #FFFFFF; /* Fondo blanco uniforme detrás de evolución urbana */
+        }
+        
+        .urban-bg-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+        }
+        
+        .urban-bg-image.active {
+            opacity: 1;
+        }
+        
+
+        
+        /* Footer */
+        .footer {
+            background-color: #023047;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+        }
+        
+        .footer img {
+            max-height: 60px;
+            margin: 10px;
+        }
+        
+        /* Animaciones */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 1s ease-out forwards;
+            opacity: 0;
+        }
+        
+        /* Media queries para responsividad */
+        @media (max-width: 768px) {
+            .step {
+                padding: 60px 20px;
+            }
+            
+            .step-content h1 {
+                font-size: 2em;
+            }
+            
+            .step-content h2 {
+                font-size: 1.5em;
+            }
+            
+            /* Cuando está integrado en un step */
+            
+            .lizmap-scrolly-container { 
+                display: none;
+            }
+
+            /* Último step: colocar la imagen debajo del texto en móvil */
+            section[data-step="32"] > div {
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+            }
+            section[data-step="32"] .step-content {
+                width: 100%;
+                max-width: 700px;
+            }
+            section[data-step="32"] > div > div:last-child {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+            }
+            section[data-step="32"] > div > div:last-child img {
+                width: 100%;
+                height: auto;
+                max-height: none;
+            }
+            
+            /* Step 3: (el estilo principal se aplica fuera de este bloque @media para evitar que desaparezca en escritorio)
+               Aquí no se incluyen las reglas principales de .step3-caption para que no queden limitadas al breakpoint 768px. */
+            section[data-step="32"] > div > div:last-child img {
+                width: 100%;
+                height: auto;
+                max-height: none;
+            }
+        }
+
+    /* --- Reglas generales para Step 3 (aplican en escritorio y se adaptan por media queries) --- */
+        section[data-step="3"] .step3-caption {
+            position: absolute;
+            left: 28px; /* margen desde la izquierda */
+            bottom: 28px; /* margen desde abajo */
+            z-index: 6;
+            background: rgba(255,255,255,0.94);
+            color: #000;
+            padding: 18px 20px;
+            border-radius: 8px;
+            max-width: 46%;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+        }
+
+        /* Asegurar que el Step 3 muestre la imagen de fondo (no usar fondo blanco global de .step) */
+        section[data-step="3"] {
+            background: transparent !important;
+            color: #000;
+        }
+
+        section[data-step="3"] .step3-caption p {
+            margin: 0;
+            font-size: 18px;
+            color: #000;
+        }
+
+        /* Ajustes intermedios: tablet y pantallas pequeñas */
+        @media (max-width: 1100px) {
+            section[data-step="3"] .step3-caption {
+                max-width: 56%;
+                left: 20px;
+                bottom: 20px;
+                padding: 16px 18px;
+            }
+            section[data-step="3"] .step3-caption p { font-size: 17px; }
+        }
+
+        /* En móviles pequeños: caja casi full-width con márgenes reducidos */
+        @media (max-width: 640px) {
+            section[data-step="3"] .step3-caption {
+                left: 14px;
+                right: 14px;
+                bottom: 14px;
+                max-width: none;
+                width: auto;
+                padding: 14px 16px;
+                border-radius: 6px;
+            }
+            section[data-step="3"] .step3-caption p { font-size: 16px; }
+        }
+        
+        /* Contenedor de fondo de Step 3: usamos <img> para permitir transform/scale animado */
+        section[data-step="3"] .step3-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        section[data-step="3"] .step3-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: 100% 0%; /* asegurar que la esquina superior derecha sea visible */
+            display: block;
+            transform-origin: 100% 0%; /* anclar el zoom en la esquina superior derecha */
+            transform: scale(1) translate3d(0,0,0);
+            transition: transform 0.25s linear;
+            will-change: transform;
+        }
+
+        /* Cuando se quiera forzar el zoom completo */
+        section[data-step="3"] .zoomed img {
+            transform: scale(1.445436522240646) translate3d(0,0,0);
+        }
+
+        /* === Overrides: columna de lectura estrecha y video con el mismo ancho que el párrafo === */
+        /* Medida base de lectura */
+    section.step .step-content { --measure: 72ch; }
+
+        /* Párrafos y listas: mismo ancho y centrados como bloque, texto alineado a la izquierda */
+        section.step .step-content p,
+        section.step .step-content li {
+            max-width: var(--measure);
+            margin-left: auto;
+            margin-right: auto;
+            text-align: left;
+        }
+
+        /* El contenedor del video adopta la misma medida que los párrafos */
+        section.step .step-content .video-wrapper {
+            width: 100%;
+            max-width: var(--measure);
+            margin-left: auto;
+            margin-right: auto;
+            overflow: hidden;
+        }
+
+        /* El video ocupa el 100% de esa medida y mantiene proporción */
+        section.step .step-content .responsive-video {
+            display: block;
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        /* En pantallas muy anchas, aún más estrecho para legibilidad */
+        @media (min-width: 1440px) {
+            section.step .step-content { --measure: 88ch; }
+        }
+
+        /* En móvil, usar todo el ancho útil */
+        @media (max-width: 768px) {
+            section.step .step-content { --measure: 100%; }
+        }
+    </style>
+    <!-- Link to external stylesheet (centralized styles) -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Contenedor para imágenes de fondo -->
+    <div id="image-container" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: 0; overflow: hidden;">
+        <img src="" style="width: 100%; height: 100%; object-fit: cover;">
+    </div>
+    
+    <!-- Contenedor para evolución urbana -->
+    <div id="urban-evolution-background" style="position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: 0; display: none; visibility: hidden; opacity: 0; transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out;">
+        <!-- Las imágenes de años se insertarán aquí dinámicamente -->
+    </div>
+    
+    <!-- Contenedor principal para el scrollytelling -->
+    <main id="scroller">
+        <!-- Step 1: Portada / Hook -->
+        <section class="step" data-step="1" style="position: relative; overflow: hidden; background: none !important; min-height: 100vh;">
+            <!-- Imagen de portada de fondo -->
+            <div class="cover-background" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('assets/1.png'); background-size: cover; background-position: center; z-index: -2;"></div>
+
+            <!-- Contenido sin estilo de las tarjetas normales -->
+            <div style="position: relative; z-index: 5; max-width: 800px; margin: 0 auto; padding: 40px 20px; text-align: center;">
+                <h1 style="font-size: 48px; font-weight: bold; margin-bottom: 30px; text-shadow: 3px 3px 6px rgba(0,0,0,0.7); color: white;"></h1>
+
+            </div>
+
+            <!-- Crédito / Fuente de la imagen de portada -->
+            <div class="photo-credit">
+                Fuente: <a href="https://cgc.qroo.gob.mx/cancun-50-anos/" target="_blank" rel="noopener" title="Cancún 50 años - cgc.qroo.gob.mx">cgc.qroo.gob.mx</a>
+            </div>
+        </section>
+
+        <!-- Step 2: Texto - Los mapas del origen -->
+        <section class="step" data-step="2" style="min-height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; z-index: 2;">
+            <div class="step-content">
+                <h2 style="font-size: 36px; font-weight: 700; margin-bottom: 24px; color: #000;">Los mapas del origen: Cancún antes de Cancún</h2>
+
+                <p style="font-size: 18px; line-height: 1.7; margin-bottom: 16px;">Durante siglos, Cancún fue una ficción dibujada sobre el papel. Antes de existir como trazo urbano, fue una isla incierta que cambiaba de forma, nombre y ubicación en los mapas de navegantes y cartógrafos europeos. En esos documentos —producidos en talleres de Sevilla, París o Londres— el Caribe era un espacio más imaginado que medido, una zona de tránsito entre lo conocido y lo conjetural.</p>
+
+                <p style="font-size: 18px; line-height: 1.7;">Las primeras representaciones del litoral norte de Yucatán apenas distinguen un contorno, una sucesión de bancos y bahías sin nombre. Solo a partir del siglo XVI empieza a delinearse una presencia: una isla alargada, separada de tierra firme por una delgada franja azul. Allí, donde hoy se extienden la Zona Hotelera y la Laguna Nichupté, los mapas dibujan una sospecha más que una certeza.</p>
+            </div>
+        </section>
+
+
+        <!-- Step 3: Imagen reutiliza assets/1.png con zoom y añade caja translúcida -->
+        <section class="step" data-step="3" style="position: relative; overflow: hidden; min-height: 100vh;">
+            <!-- Fondo reutilizando la imagen 1: ahora usamos un <img> dentro de .step3-bg para animar transform/scale -->
+            <div class="step3-bg">
+                <img src="assets/1.png" alt="Fondo histórico" aria-hidden="true">
+            </div>
+
+            <!-- Caja blanca translúcida (posicionada bottom-left mediante CSS responsivo) -->
+            <div class="step3-caption">
+                <p>En el atlas de Rotz (1542), conservado en la British Library, la región oriental de Yucatán aparece como un vacío. No hay aún “Cancún”, solo un borde entre mar y selva. Esa incertidumbre, más que un error, revela la naturaleza del mapa como herramienta de deseo: un intento por dominar lo que no se conoce.</p>
+            </div>
+            <div class="photo-credit">
+                Fuente: <a href="https://cgc.qroo.gob.mx/cancun-50-anos/" target="_blank" rel="noopener" title="Cancún 50 años - cgc.qroo.gob.mx">cgc.qroo.gob.mx</a>
+            </div>
+        </section>
+        
+        <!-- Step 4: Texto sobre la traducción del territorio -->
+        <section class="step" data-step="4">
+            <div class="step-content">
+                <p style="font-size: 18px; line-height: 1.7; margin-bottom: 16px;">Entre aquellas islas imprecisas de los atlas antiguos y la ciudad que conocemos medió un lento proceso de <strong>traducción del territorio</strong>: de la conjetura cartográfica a la <strong>medición técnica</strong>. A lo largo del siglo XX, croquis forestales, cartas náuticas y las primeras <strong>aerofotogrametrías</strong> fueron afinando el contorno de la costa norte de Yucatán y, con ello, abriendo la puerta a imaginar un uso económico del paisaje más allá de la pesca y la explotación maderera. Hacia los años sesenta, el Estado mexicano —en plena fase de <strong>desarrollo estabilizador</strong>— convirtió esa precisión en política: estudios de factibilidad del <strong>Banco de México</strong> y de instancias federales identificaron a Cancún como laboratorio para un nuevo modelo de ciudad turística planificada. Es en ese punto donde el trazo deja de ser una hipótesis sobre papel y se vuelve <strong>encargo profesional</strong>: la arquitectura y el urbanismo asumen la tarea de hacer habitable la isla imaginada, y los Landa Verdugo se colocan al centro de un proyecto que buscó, a la vez, <strong>ordenar el territorio y construir modernidad</strong>.</p>
+
+                <p style="font-size: 18px; line-height: 1.7;">Durante las décadas de 1950 y 1960, <strong>México vivía el auge del desarrollo estabilizador</strong>: un periodo de expansión económica sostenida basada en la inversión pública que buscaba modernizar la infraestructura del país y consolidar una clase media urbana. En ese contexto, <strong>los arquitectos Enrique y Agustín Landa Verdugo</strong> participaron desde su despacho en Paseo de la Reforma 234 en algunos de los proyectos más emblemáticos del Estado mexicano: hospitales, unidades habitacionales, conjuntos administrativos y planes territoriales integrales.</p>
+            </div>
+        </section>
+
+        <!-- Step 5: Las unidades Legaria y Tlatilco... -->
+        <section class="step" data-step="5">
+            <div class="step-content">
+                <p style="font-size: 18px; line-height: 1.7; margin-bottom: 16px;">Las <strong>unidades Legaria y Tlatilco</strong> en la Ciudad de México y los <strong>conjuntos del ISSSTE</strong>, como el <strong>Centro Médico Nacional 20 de Noviembre</strong>, fueron expresión tangible de ese modelo: obras eficientes, replicables y duraderas que materializaban los ideales de progreso y bienestar social en espacio físico. Cada proyecto sintetizaba la visión de un Estado que concebía la arquitectura como un <strong>símbolo de nación moderna</strong>, capaz de representar estabilidad, orden y futuro.</p>
+
+                <p style="font-size: 18px; line-height: 1.7;">Esa experiencia acumulada en el diseño de ciudades interiores y equipamientos urbanos de escala humana desembocó, hacia finales de los sesenta, en un encargo sin precedentes: <strong>imaginar una ciudad desde cero en la costa del Caribe mexicano</strong>. En 1968, el <strong>Plan Maestro de Cancún</strong> se redactó en oficinas de aire frío en la Ciudad de México, en medio de croquis, mapas y planos inspirados en aquellos conjuntos habitacionales que habían definido la modernidad urbana del país. El objetivo era trasladar esa lógica —la proximidad peatonal, las supermanzanas con áreas verdes internas y los pequeños comercios accesibles a pie— a un territorio tropical aún sin nombre propio dentro de la planeación nacional.</p>
+
+                <p style="font-size: 18px; line-height: 1.7;">Aquella visión tomó forma jurídica el <strong>10 de agosto de 1971</strong>, cuando se publicó en el <strong>Diario Oficial de la Federación</strong> el <strong>decreto que declaraba de interés público la planeación y el desarrollo turístico, habitacional y recreativo en los terrenos de la Isla Cancún y sus alrededores</strong>, bajo la jurisdicción del Gobierno del Territorio de Quintana Roo.</p>
+
+                <p style="font-size: 18px; line-height: 1.7;">Esa página amarillenta, encabezada por el sello del Estado mexicano, selló el tránsito de la idea a la acción: <strong>Cancún dejaba de ser un sueño de ingenieros y arquitectos para convertirse en política de Estado</strong>.</p>
+            </div>
+        </section>
+
+        <!-- Step 6: Imagen 2.jpg - flotante y centrada -->
+        <section class="step" data-step="6" style="position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center;">
+            <div class="floating-image-container" style="max-width: 90%; max-height: 80vh; display:flex; align-items:center; justify-content:center;">
+                    <img class="floating-image" src="assets/2.jpg" alt="Imagen histórica">
+            </div>
+        </section>
+
+        <!-- Step 7: La línea sobre la arena -->
+        <section class="step" data-step="7">
+            <div class="step-content">
+                <h2>La línea sobre la arena</h2>
+
+                <p>Cuando llegaron los primeros ingenieros al Caribe mexicano, Cancún no existía. Era apenas una lengua de arena, un manto de selva baja que se abría paso entre manglares y plantaciones de cocoteros. El viento del norte soplaba con fuerza, levantando la arena que se pegaba a las botas de los topógrafos. Uno de ellos, <strong>Rudy</strong>, recuerda haber pasado días enteros trazando líneas con cinta métrica, sujetando estacas mientras el sol caía a plomo sobre el terreno.</p>
+
+                <p>“Había que imaginar la ciudad antes de verla”, dice Rudy en una entrevista de 1970, recogida en los archivos del Banco de México. “El plano se dibujaba sobre un suelo que todavía no tenía calles ni nombres.” En aquel entonces, tres hombres vivían en un pequeño campamento improvisado cerca de la playa.</p>
+
+                <p>Eran los encargados de cuidar los cocoteros, limpiar los canales y ahuyentar a los mapaches que buscaban agua entre los surcos. Dormían bajo una techumbre de palma, colgaban sus hamacas entre los troncos y encendían una fogata al caer la tarde. Uno de ellos, de apellido <strong>Argüelles</strong>, contaba historias sobre la vida en Isla Mujeres; otro, <strong>Pablo</strong>, había trabajado en la construcción de la carretera a Puerto Juárez; el tercero apenas hablaba español, pero sabía trepar con destreza para recoger los cocos más altos.</p>
+
+                <p>Eran los únicos testigos de lo que estaba por ocurrir: la fundación de una ciudad que nacería planeada, milimétrica, como un dibujo sobre el mar.</p>
+            </div>
+        </section>
+
+        <!-- Step 8: párrafo y video 3.mp4 -->
+        <section class="step" data-step="8">
+            <div class="step-content">
+                <p><strong>Rudy fue quien trazó la primera línea recta que se convertiría en una avenida.
+                La marcó con cal y una cuerda tensada entre dos estacas. Al terminar, dijo: “Aquí va a pasar la gente caminando.” No había camiones ni banquetas, solo arena y mariposas.</strong></p>
+
+                <div class="video-wrapper">
+                    <video controls class="responsive-video">
+                        <source src="assets/3.mp4" type="video/mp4">
+                        Tu navegador no soporta la etiqueta de video.
+                    </video>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 9: Texto sobre los cuidadores y supermanzanas -->
+        <section class="step" data-step="9">
+            <div class="step-content">
+                <p><strong>Desde su pequeña tienda de campaña, veía a los cocoteros balancearse con el viento. Los tres cuidadores —a quienes llamaban <em>los hombres del coco</em>— caminaban descalzos entre la maleza. Uno de ellos silbaba canciones de Tabasco mientras llenaba un balde de agua en un pozo recién cavado. En las tardes, compartían arroz y pescado seco con los ingenieros, conversaban sobre el futuro y sobre si realmente alguien vendría a vivir aquí.</strong></p>
+
+                <p><strong>La respuesta llegó meses después, cuando el primer convoy de trabajadores cruzó desde Mérida: albañiles, carpinteros, obreros y estudiantes de arquitectura que venían “a levantar una ciudad desde cero”.
+“Era el sueño de una modernidad tropical”, recuerda uno de ellos en el documento <em>Bienvenido a Cancún</em> de 1971. “Construir un lugar que fuera de todos, no solo de turistas.”</strong></p>
+
+                <p><strong>Las ideas de las supermanzanas —bloques de 250 metros rodeados por vías perimetrales, donde los peatones no necesitaran cruzar calles para llegar a la escuela o al mercado— parecían entonces una utopía posible.</strong></p>
+
+                <p><strong>“El automóvil debía quedar afuera”, escribió Landa. “La vida debía ocurrir en el interior.”</strong></p>
+
+                <p>Las primeras <strong>Supermanzanas 1, 2 y 3</strong> se levantaron entre 1970 y 1973.
+                    <br>Eran círculos de tierra trazados con exactitud: calles internas sinuosas, casas orientadas para recibir sombra y ventilación cruzada, patios comunes en el centro con árboles nativos.
+                </p>
+
+                <p>Los planos muestran cómo cada manzana estaba pensada como una célula de vida completa.
+                    <br>En el centro, una escuela; junto a ella, una cancha y un pequeño mercado.
+                    <br>El perímetro, delimitado por avenidas anchas, marcaba el borde entre el tráfico vehicular y la vida peatonal.
+                </p>
+            </div>
+        </section>
+
+        <!-- Step 10: Imagen flotante 4.png -->
+        <section class="step" data-step="10" style="position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center;">
+                <img class="floating-image floating-image--xlarge clean" src="assets/4.png" alt="Imagen histórica 4" loading="lazy" decoding="async">
+                <div class="photo-credit--inline">Fuente: <a href="https://landamartinez.com/comic8/" target="_blank" rel="noopener">https://landamartinez.com/comic8/</a></div>
+        </section>
+
+        <!-- Step 11: Texto sobre la vida en las supermanzanas -->
+        <section class="step" data-step="11">
+            <div class="step-content">
+                <p style="font-size: 18px; line-height: 1.7; margin-bottom: 16px;">“Queríamos que la gente pudiera caminar con los pies descalzos,” escribió <strong>Agustín Landa Verdugo</strong>.
+                    <br>“Que Cancún fuera una ciudad donde el peatón tuviera el mismo derecho que el turista.”</p>
+
+                <p style="font-size: 18px; line-height: 1.7; margin-bottom: 16px;">En los primeros años, los vecinos compartían todo: herramientas, sombra, noticias.
+                    <br>Las mujeres organizaban rifas para comprar ventiladores; los hombres reparaban los techos después de cada tormenta. Las supermanzanas eran pequeñas comunidades rodeadas de vegetación.
+                    <br>“Se escuchaba el mar desde cualquier punto”, recuerda una de las primeras maestras del kínder de la Supermanzana 3. “Y cuando llovía, el aire olía a coco y tierra mojada.”</p>
+            </div>
+        </section>
+
+        <!-- Step 12: Imagen 5.png con comportamiento de zoom (reutiliza la lógica de Step 3) -->
+        <section class="step urban-year-image" data-step="12" data-year="1995" style="position: relative; overflow: hidden; min-height: 100vh;">
+            <!-- Fondo: usamos un <img> para poder animar transform/scale de forma fluida (igual que step 3) -->
+            <div class="step12-bg" style="position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden;z-index:-2;pointer-events:none;">
+                <!--
+                    Ajustes:
+                    - data-crop-width / data-crop-height: tamaño (px) de la porción recortada que debe llenar la ventana (525x380)
+                    - data-focus-x / data-focus-y: punto focal dentro de la imagen (0..1).
+                -->
+             <!-- Single-image approach: show the full image (object-fit: contain) initially
+                 and perform zoom by scaling the same image. No crossfade or opacity changes. -->
+             <img class="step12-img" src="assets/5.png" alt="Detalle 1995" loading="lazy" decoding="async"
+                 style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:contain;object-position:50% 50%;transform-origin:50% 50%;transform:scale(1) translate3d(0,0,0);transition:transform 2s ease-out;will-change:transform;"
+                 data-crop-width="525" data-crop-height="380" data-focus-x="0.5" data-focus-y="0.5">
+            </div>
+        </section>
+
+        <!-- Step 13 -->
+        <section class="step" data-step="13"></section>
+        <!-- Step 14 -->
+        <section class="step" data-step="14"></section>
+        <section class="step" data-step="15"></section>
+        <section class="step" data-step="16"></section>
+        <section class="step" data-step="17"></section>
+        <section class="step" data-step="18"></section>
+        <section class="step" data-step="19"></section>
+        <section class="step" data-step="20"></section>
+        <section class="step" data-step="21"></section>
+        <section class="step" data-step="22"></section>
+        <section class="step" data-step="23"></section>
+        <section class="step" data-step="24"></section>
+        <section class="step" data-step="25"></section>
+        <section class="step" data-step="26"></section>
+        <section class="step" data-step="27"></section>
+        <section class="step" data-step="28"></section>
+        <section class="step" data-step="29"></section>
+        <section class="step" data-step="30"></section>
+        <section class="step" data-step="31"></section>
+        <section class="step" data-step="32"></section>
+
+        <!-- Footer con logo IMPLAN -->
+        <div class="footer">
+            <p>IMPLAN Cancún | Instituto de Planeación del Desarrollo Urbano</p>
+            <p>© 2025 - Todos los derechos reservados</p>
+        </div>
+    </main>
+    
+    <script>
+        // Zoom progress for Step 3: escala de 1 -> maxScale basada en el progreso de scroll dentro de la sección
+        (function() {
+            const step = document.querySelector('section[data-step="3"]');
+            if (!step) return;
+            const img = step.querySelector('.step3-bg img');
+            if (!img) return;
+
+            const maxScale = 1.445436522240646; // escala máxima al final del step (calculada para caja 485x256 desde top-right)
+            let ticking = false;
+
+            function update() {
+                ticking = false;
+                const rect = step.getBoundingClientRect();
+                const vh = window.innerHeight || document.documentElement.clientHeight;
+
+                // Only run the zoom while this step is the active one (prevents starting during step 2)
+                if (!step.classList.contains('is-active')) {
+                    // reset to original size when not active
+                    img.style.transform = 'scale(1)';
+                    return;
+                }
+
+                // Compute progress while the step is active. We'll map progress from 0 -> 1
+                // as the step's top moves from the bottom of the viewport (entering) to the top (fully in view).
+                // This keeps the zoom confined to the moment the step becomes active.
+                const p = Math.max(0, Math.min(1, (vh - rect.top) / vh));
+
+                const scale = 1 + (maxScale - 1) * p;
+                img.style.transform = `scale(${scale})`;
+            }
+
+            function onScroll() {
+                if (!ticking) {
+                    ticking = true;
+                    requestAnimationFrame(update);
+                }
+            }
+
+            // Also toggle a class when fully scrolled for an extra CSS animation if desired
+            function checkToggleClass() {
+                const rect = step.getBoundingClientRect();
+                const vh = window.innerHeight || document.documentElement.clientHeight;
+                const inside = Math.max(0, Math.min(1, (vh - rect.top) / (rect.height + 0.0001)));
+                if (inside >= 0.98) {
+                    step.classList.add('zoomed');
+                } else {
+                    step.classList.remove('zoomed');
+                }
+            }
+
+            window.addEventListener('scroll', onScroll, { passive: true });
+            window.addEventListener('resize', onScroll);
+            window.addEventListener('scroll', function() { requestAnimationFrame(checkToggleClass); }, { passive: true });
+
+            // Initialize
+            requestAnimationFrame(update);
+        })();
+    </script>
+
+    <script>
+
+        
+        // Script adicional para configurar fondos de secciones específicas
+        document.addEventListener('DOMContentLoaded', function() {
+            // Lazy-load para fondos de secciones con data-bg
+            (function(){
+                const lazyBgs = Array.from(document.querySelectorAll('.lazy-bg[data-bg]'));
+                if (!lazyBgs.length) return;
+                const supportIO = 'IntersectionObserver' in window;
+                const applyBg = (el) => {
+                    if (el.dataset.bgApplied) return;
+                    const url = el.getAttribute('data-bg');
+                    if (!url) return;
+                    // Preload de imagen para evitar flash
+                    const img = new Image();
+                    img.onload = () => {
+                        el.style.backgroundImage = `url('${url}')`;
+                        el.dataset.bgApplied = '1';
+                    };
+                    img.src = url;
+                };
+                if (!supportIO) {
+                    lazyBgs.forEach(applyBg);
+                    return;
+                }
+                const io = new IntersectionObserver((entries)=>{
+                    entries.forEach(entry=>{
+                        if (entry.isIntersecting || entry.intersectionRatio > 0) {
+                            applyBg(entry.target);
+                            io.unobserve(entry.target);
+                        }
+                    });
+                }, { root: null, rootMargin: '300px 0px', threshold: 0.01 });
+                lazyBgs.forEach(el=>io.observe(el));
+            })();
+            // La configuración de fondo para la sección de cierre ha sido eliminada
+            // El step 30 ahora usa solo el fondo de color sin imagen
+            
+            // Configurar otros fondos de secciones según sea necesario
+            // Se reemplazó la asignación inmediata de background-image por lazy-load con .lazy-bg
+            // La sección con fotos de tráfico ha sido eliminada
+            
+            // Asegurarnos de que el video de fondo se reproduce correctamente
+            const bgVideo = document.getElementById('background-video');
+            if (bgVideo) {
+                console.log('Video de fondo encontrado, asegurando reproducción...');
+                
+                // Forzar la reproducción del video sin añadir botón
+                const playPromise = bgVideo.play();
+                
+                if (playPromise !== undefined) {
+                    playPromise.then(_ => {
+                        console.log('Video de fondo reproduciendo correctamente');
+                    }).catch(error => {
+                        console.warn('No se pudo reproducir el video automáticamente:', error);
+                        // En caso de error, simplemente volvemos a intentar reproducir el video
+                        setTimeout(() => {
+                            bgVideo.play().catch(e => console.log('Segundo intento fallido, pero continuamos sin botón'));
+                        }, 1000);
+                    });
+                }
+                
+                // Asegurarnos de que el video se mantenga en proporción y cubra la pantalla
+                const handleResize = () => {
+                    const step1 = document.querySelector('section[data-step="1"]');
+                    if (step1 && bgVideo) {
+                        const aspectRatio = bgVideo.videoWidth / bgVideo.videoHeight;
+                        const containerWidth = step1.offsetWidth;
+                        const containerHeight = step1.offsetHeight;
+                        
+                        if ((containerWidth / containerHeight) < aspectRatio) {
+                            bgVideo.style.width = 'auto';
+                            bgVideo.style.height = '100%';
+                        } else {
+                            bgVideo.style.width = '100%';
+                            bgVideo.style.height = 'auto';
+                        }
+                    }
+                };
+                
+                // Llamar al resize inicial y en cada cambio de tamaño
+                window.addEventListener('resize', handleResize);
+                bgVideo.addEventListener('loadedmetadata', handleResize);
+            }
+        });
+    </script>
+
+    <script>
+        // Zoom para Step 12: reutiliza la lógica del step 3 y centra el zoom en la porción 525x380
+        (function() {
+            const step = document.querySelector('section[data-step="12"]');
+            if (!step) return;
+            const img = step.querySelector('.step12-bg .step12-img');
+            if (!img) return;
+
+            const cropW = parseFloat(img.getAttribute('data-crop-width')) || 525;
+            const cropH = parseFloat(img.getAttribute('data-crop-height')) || 380;
+            const focusX = parseFloat(img.getAttribute('data-focus-x')) || 0.9;
+            const focusY = parseFloat(img.getAttribute('data-focus-y')) || 0.5;
+            // Maximum additional shift to the right relative to focusX (20% = 0.2)
+            const maxRightShift = 0.20;
+
+            // Apply initial focus/origin to the image so transforms use the correct pivot
+            img.style.objectPosition = `${focusX * 100}% ${focusY * 100}%`;
+            img.style.transformOrigin = `${focusX * 100}% ${focusY * 100}%`;
+
+            let ticking = false;
+
+            function computeMaxScale() {
+                const vw = window.innerWidth || document.documentElement.clientWidth;
+                const vh = window.innerHeight || document.documentElement.clientHeight;
+                const sx = vw / cropW;
+                const sy = vh / cropH;
+                const raw = Math.max(sx, sy, 1);
+                return 1 + (raw - 1) * 0.9; //Tamaño zoom in 
+            }
+
+            function update() {
+                ticking = false;
+                const rect = step.getBoundingClientRect();
+                const vh = window.innerHeight || document.documentElement.clientHeight;
+
+                // Only run the zoom while this step is the active one
+                if (!step.classList.contains('is-active')) {
+                    img.style.transform = 'scale(1)';
+                    return;
+                }
+
+                // Compute progress while the step is active. Map progress from 0 -> 1
+                // as the step's top moves from the bottom of the viewport (entering) to the top (fully in view).
+                const p = Math.max(0, Math.min(1, (vh - rect.top) / vh));
+
+                // Hold (pausa) antes de iniciar el zoom: mantener la imagen completa durante
+                // el primer tramo del progreso para que el usuario la vea entera.
+                // Ajusta `holdPortion` (0..1) para cambiar cuánto tiempo se mantiene fija.
+                const holdPortion = 0.30; // 30% del recorrido del step se mantiene sin zoom
+                let effectiveP;
+                if (p <= holdPortion) {
+                    effectiveP = 0; // sin zoom
+                } else {
+                    // Mapear el rango [holdPortion..1] a [0..1]
+                    effectiveP = (p - holdPortion) / (1 - holdPortion);
+                    effectiveP = Math.max(0, Math.min(1, effectiveP));
+                }
+
+                // Apply zoom directly to the single image: keep object-fit: contain
+                // so the image is fully visible at scale 1, then scale it up to produce the zoom-in.
+                const maxScale = computeMaxScale();
+                const scale = 1 + (maxScale - 1) * effectiveP;
+
+                // Shift the focal pivot gradually to the right up to `maxRightShift`
+                // pivotX = focusX + maxRightShift * effectiveP (clamped to 1)
+                let pivotX = focusX + maxRightShift * effectiveP;
+                if (pivotX > 1) pivotX = 1;
+
+                img.style.transformOrigin = `${pivotX * 100}% ${focusY * 100}%`;
+                img.style.objectPosition = `${pivotX * 100}% ${focusY * 100}%`;
+
+                img.style.transform = `scale(${scale})`;
+            }
+
+            function onScroll() {
+                if (!ticking) {
+                    ticking = true;
+                    requestAnimationFrame(update);
+                }
+            }
+
+            function checkToggleClass() {
+                const rect = step.getBoundingClientRect();
+                const vh = window.innerHeight || document.documentElement.clientHeight;
+                const inside = Math.max(0, Math.min(1, (vh - rect.top) / (rect.height + 0.0001)));
+                if (inside >= 0.98) step.classList.add('zoomed'); else step.classList.remove('zoomed');
+            }
+
+            window.addEventListener('scroll', onScroll, { passive: true });
+            window.addEventListener('resize', onScroll);
+            window.addEventListener('scroll', function() { requestAnimationFrame(checkToggleClass); }, { passive: true });
+            window.addEventListener('resize', function() { requestAnimationFrame(update); });
+
+            requestAnimationFrame(update);
+
+            // No MutationObserver needed; behavior mirrors step 3 using is-active class and progress mapping
+        })();
+    </script>
+</body>
+</html>

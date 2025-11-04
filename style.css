@@ -1,0 +1,634 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #FFFFFF; /* Fondo blanco general */
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilos para diferentes elementos de texto con colores de la paleta */
+.step-content h1 {
+    text-align: center;
+    color: #000000; /* Color naranja */
+    font-family: 'Krona One', sans-serif;
+    font-size: 2.5em;
+}
+
+.step-content h2 {
+    text-align: center;
+    color: #000000;
+    font-family: 'Krona One', sans-serif;
+}
+
+.step-content p {
+    text-align: center;
+    color: #000000;
+    background-color: transparent;
+    margin: 1rem 0;
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+/* Estilos para la visualización de imágenes de años urbanos */
+.urban-year-image {
+    position: relative;
+    min-height: 100vh;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Estilos para la superposición de evidencia histórica */
+.evidence-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    
+    /* Reglas de Flexbox para Centrado Perfecto */
+    display: flex;
+    justify-content: center; /* CLAVE: Centra Horizontalmente */
+    align-items: center;    /* Centra Verticalmente */
+    
+    /* Reglas de Visibilidad */
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+    pointer-events: none;
+}
+
+.urban-year-image.active .evidence-overlay {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.evidence-img {
+    /* Asegúrate de que la imagen sea más pequeña que el viewport */
+    max-width: 90vw; 
+    max-height: 90vh; 
+    
+    /* Déjale sus estilos estéticos */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    border: 5px solid white;
+}
+
+.light.centered {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 101;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 15px;
+    border-radius: 5px;
+    max-width: 80%;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    text-align: center;
+}
+
+.urban-year-image.active .light.centered {
+    opacity: 1;
+    visibility: visible;
+}
+
+.step-content li {
+    text-align: center;
+    color: #000000;
+}
+
+.step-content strong {
+    color: #000000; /* Color amarillo para énfasis */
+    font-weight: bold;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+/* Estilos globales */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #FFFFFF; /* Fondo blanco general */
+    margin: 0;
+    padding: 0;
+}
+
+/* Asegurar que todos los pasos de texto usen la misma tipografía */
+.step .step-content {
+    font-family: 'Montserrat', sans-serif;
+    color: #000000;
+    max-width: 900px;
+    padding: 60px 24px;
+    margin: 0 auto;
+}
+
+/* --- Estilo común para todos los pasos de texto --- */
+.step .step-content h2 {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    color: #000;
+}
+
+.step .step-content p {
+    font-size: 18px;
+    line-height: 1.7;
+    margin-bottom: 16px;
+    padding: 0; /* evitar padding extra en los párrafos para que hereden los márgenes del contenedor */
+    background-color: transparent;
+    border-radius: 0;
+}
+
+/* Clases de vídeo (se mantienen para maquetado del video) */
+.video-wrapper {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    /* limitar el ancho del contenedor del video para que mantenga los márgenes interiores del step (900px menos padding horizontal 24px*2 = 48px) */
+    max-width: 852px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.responsive-video {
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    object-fit: contain;
+    max-height: 60vh; /* evitar que ocupe más altura que la pantalla */
+}
+
+/* Asegurar que el contenedor use box-sizing para calcular correctamente anchos internos */
+.step .step-content {
+    box-sizing: border-box;
+}
+
+/* Responsive: reducir paddings y max-width en pantallas pequeñas */
+@media (max-width: 768px) {
+    .step .step-content {
+        padding: 32px 16px;
+        max-width: 100%;
+    }
+
+    .video-wrapper {
+        max-width: calc(100% - 32px);
+    }
+
+    .responsive-video {
+        max-height: 45vh;
+    }
+}
+
+/* Estilos para visualizaciones específicas - actualizados con la paleta */
+.density-label {
+    font-family: 'Inter', sans-serif;
+    text-shadow: none;
+    color: #000000;
+}
+
+/* Contenedor del texto (scroller) */
+#scroller {
+    position: relative;
+    z-index: 10;
+}
+
+/* Cada paso individual de la historia */
+.step-content {
+    background-color: transparent !important;
+    padding: 60px 24px; /* mantener márgenes internos para legibilidad */
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    max-width: 900px; /* mantener ancho de lectura */
+    margin: 0 auto;
+    text-align: left; /* texto alineado a la izquierda para lectura */
+    transition: opacity 0.7s, transform 0.7s;
+    opacity: 1;
+    color: inherit; /* hereda color del step (puede ser oscuro o claro según el fondo) */
+    border: none !important;
+}
+
+        .step {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+            z-index: 20;
+            position: relative;
+            background-color: transparent !important;
+        }
+        
+        .step-with-background {
+            position: relative;
+            background-image: none !important;
+            background-color: #FFFFFF !important;
+            background-size: cover;
+            background-position: center;
+            background-attachment: initial;
+            z-index: 1;
+        }
+        
+        .step-with-background::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: transparent !important;
+            z-index: 0;
+        }.step-content.is-active {
+            opacity: 1;
+            transform: translateY(0);
+            background-color: transparent !important;
+        }
+
+        .step-content {
+            font-family: 'Montserrat', sans-serif;
+            padding: 60px 24px;
+            border-radius: 0;
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: left;
+            transition: opacity 0.7s, transform 0.7s;
+            opacity: 1;
+            background-color: transparent !important;
+            box-shadow: none !important;
+            color: inherit; /* keep contrast depending on step background */
+        }
+
+.step.is-out {
+    pointer-events: none;
+}
+
+.step.is-out .step-content {
+    opacity: 0;
+    transform: translateY(-100vh);
+    transition: opacity 0.7s, transform 0.7s;
+}
+
+/* Transiciones suaves para contenedores de visualización */
+#chart-container, #video-container, #image-container {
+    transition: opacity 1.2s ease-in-out, transform 1.2s ease-in-out;
+    opacity: 0;
+    transform: translateY(100vh);
+    background-color: #FFB703; /* Color amarillo de fondo */
+    border-radius: 8px;
+}
+
+/* Estilos específicos para el primer step */
+ .step-with-background .step-content {
+    /* mantener el contenido legible si el step tiene fondo complejo */
+    background-color: rgba(255,255,255,0.06) !important;
+    box-shadow: none;
+    border: none;
+    max-width: 800px;
+}
+
+.step-with-background .step-content p {
+    background-color: transparent;
+    color: #000000;
+    text-shadow: none;
+}
+
+.step-with-background .step-content h1 {
+    color: #000000;
+    text-shadow: none;
+}
+
+/* === Overrides finales: asegurar que todos los pasos de texto compartan exactamente
+   el mismo ancho y padding. === */
+section.step .step-content {
+    max-width: 900px !important;
+    padding: 60px 24px !important;
+    margin: 0 auto !important;
+    box-sizing: border-box !important;
+}
+
+section.step .step-content p {
+    padding: 0 !important;
+    margin-bottom: 16px !important;
+    font-size: 18px !important;
+    line-height: 1.7 !important;
+    color: inherit !important;
+}
+
+/* El contenedor del video siempre se ajusta al ancho interior del .step-content */
+section.step .step-content .video-wrapper {
+    width: 100% !important;
+    max-width: calc(900px - 48px) !important; /* ancho interior: 900 - 24*2 */
+    margin: 20px auto 0 !important;
+}
+
+section.step .step-content .responsive-video {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: 60vh !important;
+    display: block !important;
+    margin: 0 auto !important;
+    object-fit: contain !important;
+}
+
+@media (max-width: 768px) {
+    section.step .step-content {
+        padding: 32px 16px !important;
+        max-width: 100% !important;
+    }
+
+    section.step .step-content .video-wrapper {
+        max-width: calc(100% - 32px) !important;
+    }
+
+    section.step .step-content .responsive-video {
+        max-height: 45vh !important;
+    }
+}
+
+.step-with-background .step-content strong {
+    color: #000000;
+    text-shadow: none;
+}
+
+#video-container.visible, #image-container.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#video-container.hidden, #image-container.hidden {
+    opacity: 0;
+    transform: translateY(-100vh);
+}
+
+/* Ajuste de color de texto para fondo blanco */
+.step-content p, .step-content li {
+    color: #000000;
+}
+
+.step-content strong {
+    color: #000000; /* Color amarillo para énfasis */
+}
+
+
+/* === Mejorar legibilidad: párrafos con medida tipográfica y centrados en el contenedor === */
+/* Definimos una medida típica de lectura y la reutilizamos */
+section.step .step-content { --measure: 72ch; }
+
+/* Párrafos y listas: texto alineado a la izquierda, en una columna más angosta y centrada */
+section.step .step-content p,
+section.step .step-content li {
+    max-width: var(--measure) !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    text-align: left !important;
+}
+
+/* Mantener títulos centrados */
+section.step .step-content h1,
+section.step .step-content h2,
+section.step .step-content h3 {
+    text-align: center !important;
+}
+
+/* El contenedor del video adopta la misma medida que los párrafos */
+section.step .step-content .video-wrapper {
+    max-width: var(--measure) !important;
+    width: 100% !important;
+    overflow: hidden; /* evita cualquier desborde visual */
+}
+
+/* El video es 100% del ancho disponible y mantiene proporción */
+section.step .step-content .responsive-video {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    max-width: 100% !important;
+    object-fit: contain !important;
+}
+
+/* Ajuste fino en móviles: usar todo el ancho con buenos márgenes */
+@media (max-width: 768px) {
+    section.step .step-content { --measure: 100%; }
+    section.step .step-content .responsive-video { max-height: 45vh !important; }
+}
+
+/* En pantallas muy anchas, aún más estrecho para mejorar legibilidad */
+@media (min-width: 1440px) {
+    section.step .step-content { --measure: 88ch; }
+}
+
+/* Elementos comunes: asegurar responsividad general */
+section.step .step-content img,
+section.step .step-content video,
+section.step .step-content svg,
+section.step .step-content canvas {
+    max-width: 100% !important;
+    height: auto !important;
+}
+
+/* Cargar y usar la fuente Comic8 (servida desde el enlace proporcionado) */
+@font-face {
+    font-family: 'Comic8';
+    src: url('https://landamartinez.com/comic8/Comic8.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Estilos para el pie de foto flotante sobre la imagen */
+
+.floating-image-container { position: relative; display: flex; flex-direction: column; align-items: center; }
+/* Contenedor para imágenes flotantes junto a su leyenda
+   Esta clase reemplaza los estilos inline usados en algunos steps. */
+.floating-image-container {
+    max-width: 90%;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 0 auto;
+    padding: 0 12px; /* espacio lateral para pantallas pequeñas */
+}
+
+/* Clase reutilizable para imágenes flotantes */
+.floating-image {
+    max-width: 100%;
+    max-height: 80vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+    border-radius: 8px;
+    display: block;
+}
+
+/* Variante para imágenes más grandes / con mayor presencia */
+.floating-image--large {
+    max-height: 70vh;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+/* Variante extra-grande para pasos que necesitan mayor presencia visual
+   Usar con precaución: límite al 90vh para evitar overflow en pantallas pequeñas. */
+/* Nota: la variante .floating-image--xlarge ahora no aplica transform.
+    Para evitar afectar otras imágenes, el incremento del 40% se aplica
+    específicamente al Step 10 mediante el selector `section.step[data-step="10"]`.
+    Usamos `min(100vh, calc(80vh * 1.4))` para aumentar hasta 40% pero no pasar
+    del alto de la ventana. */
+.floating-image--xlarge {
+     /* Mantener disponible como clase auxiliar, pero por seguridad no forzamos tamaño aquí.
+         El ajuste real se aplica sólo en el scope del step 10 más abajo. */
+     display: block;
+}
+
+/* Evitar que el scale cause overflow en dispositivos pequeños: revertir el scale y limitar altura */
+@media (max-width: 768px) {
+    .floating-image--xlarge {
+        /* En móviles limitar tamaño y no usar escalados visuales */
+        max-height: 90vh;
+    }
+}
+
+/* Ajuste puntual: Step 10 -> aumentar la imagen un 40% respecto al baseline (80vh * 1.4)
+   pero sin exceder la altura de la ventana. Esto evita superponer el contenido anterior. */
+/* Step 10: imagen flotante pero en el flujo (no overlay).
+   Hacemos que el contenedor permita una imagen más ancha y centrada
+   y aumentamos el tamaño aproximadamente un 40% respecto al tamaño
+   que tenía en su contenedor original. */
+section.step[data-step="10"] .floating-image-container {
+    max-width: 100%; /* permitir ocupar más ancho que la regla genérica */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 12px;
+    margin: 0 auto;
+    /* permitir que el contenedor crezca según la imagen (no recortar) */
+    overflow: visible;
+}
+
+section.step[data-step="10"] .floating-image,
+section.step[data-step="10"] img.floating-image--xlarge {
+    /* Aumentar ~40%: usar un ancho mayor en relación con el viewport para garantizar presencia
+       sin usar transform (que superpone). */
+    width: min(95vw, 1400px);
+    max-width: 1400px;
+    height: auto;
+    max-height: 100vh; /* no superar la altura de la ventana */
+    object-fit: contain;
+    display: block; /* empuja el flujo hacia abajo */
+    box-shadow: 0 18px 50px rgba(0,0,0,0.35); /* aspecto "flotante" */
+    border-radius: 12px;
+}
+
+section.step[data-step="10"] .floating-image.clean {
+    box-shadow: none !important;
+    background: transparent !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+}
+
+/* Asegurar que el crédito aparezca debajo de la imagen y sea legible */
+section.step[data-step="10"] .photo-credit--inline,
+section.step[data-step="10"] .source-caption {
+    display: block !important;
+    width: auto !important;
+    margin-top: 12px !important;
+    text-align: center !important;
+}
+
+section.step[data-step="10"] {
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+}
+
+section.step[data-step="10"] img.floating-image.clean,
+section.step[data-step="10"] img.floating-image--xlarge.clean {
+    box-shadow: none !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    display: block !important;
+    margin: 0 auto !important;
+}
+
+/* Variante de caption para cuando la imagen está sobre un fondo oscuro/overlay */
+.floating-image-caption {
+    /* Mostrar la fuente debajo de la imagen en overlays (texto claro sobre oscuro) */
+    position: static;
+    margin-top: 12px;
+    background: transparent;
+    color: #ffffff;
+    padding: 0;
+    border-radius: 0;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    line-height: 1.2;
+    text-align: center;
+    pointer-events: auto;
+    box-shadow: none;
+    text-shadow: 3px 3px 6px rgba(0,0,0,0.7);
+}
+
+.floating-image-caption a { color: inherit; text-decoration: underline; }
+
+/* Estilo global para créditos / fuentes (visible sobre imágenes) */
+/* Ensure high specificity so these global credits always display correctly */
+.step .photo-credit,
+.photo-credit {
+    position: absolute;
+    bottom: 14px;
+    right: 16px;
+    /* etiqueta pequeña gris translúcida */
+    background: rgba(128,128,128,0.45) !important;
+    color: #fff !important;
+    padding: 6px 10px !important;
+    border-radius: 6px !important;
+    font-size: 12px !important;
+    line-height: 1.3 !important;
+    z-index: 9999 !important;
+    pointer-events: auto !important;
+}
+.photo-credit a { color: #fff !important; text-decoration: underline !important; }
+.photo-credit a:hover { text-decoration: none !important; }
+
+/* leyenda debajo de imagen: mismo aspecto visual pero sin posicionamiento absoluto */
+.floating-image-container .source-caption,
+.floating-image-container .photo-credit--inline,
+.source-caption,
+.photo-credit--inline {
+    background: rgba(128,128,128,0.45) !important;
+    color: #fff !important;
+    padding: 6px 10px !important;
+    border-radius: 6px !important;
+    font-size: 12px !important;
+    line-height: 1.3 !important;
+    pointer-events: auto !important;
+    display: inline-block !important;
+    text-align: center !important;
+    margin-top: 8px !important;
+}
+.source-caption a, .photo-credit--inline a { color: #fff !important; text-decoration: underline !important; }
+.source-caption a:hover, .photo-credit--inline a:hover { text-decoration: none !important; }
+
+@media (max-width: 768px) {
+    .source-caption, .floating-image-caption { font-size: 12px !important; padding: 6px 8px !important; }
+}
+
+
