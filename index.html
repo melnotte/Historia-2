@@ -581,6 +581,32 @@
                 gap: 16px;
             }
         }
+
+        /* Step 19: video superior + texto con entrada suave */
+        section[data-step="19"] .step19-media {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+            will-change: opacity, transform;
+            margin-bottom: 20px;
+        }
+
+        section[data-step="19"] .step-content {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+            will-change: opacity, transform;
+        }
+
+        section[data-step="19"].is-active .step19-media,
+        section[data-step="19"].is-active .step-content {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            section[data-step="19"] .step19-media { margin-bottom: 16px; }
+        }
     </style>
     <!-- Link to external stylesheet (centralized styles) -->
     <link rel="stylesheet" href="style.css">
@@ -798,7 +824,7 @@
 
                 <p style="font-size: 18px; line-height: 1.7; margin-bottom: 16px;">El trayecto diario —cruzar el puente hacia la zona hotelera y regresar por la noche a las regiones populares— era extenuante, pero también formativo. Esa movilidad constante generó un conocimiento profundo del territorio y una relación particular con el paisaje: el mar dejaba de ser solo un atractivo para convertirse en parte de la vida diaria.</p>
 
-                <p style="font-size: 18px; line-height: 1.7;">Durante los fines de semana, las playas públicas como <strong>Perlas o Tortugas eran ocupadas por familias locales</strong> . Aun en medio del auge turístico, los cancunenses mantuvieron la costumbre de ><strong>“ir al mar”</strong>, llevar comida casera y convivir bajo las palapas. Esa reapropiación del espacio turístico por los habitantes fue una forma silenciosa de afirmar su derecho a la ciudad.</p>
+                <p style="font-size: 18px; line-height: 1.7;">Durante los fines de semana, las playas públicas como <strong>Perlas o Tortugas eran ocupadas por familias locales</strong> . Aun en medio del auge turístico, los cancunenses mantuvieron la costumbre de <strong>“ir al mar”</strong>, llevar comida casera y convivir bajo las palapas. Esa reapropiación del espacio turístico por los habitantes fue una forma silenciosa de afirmar su derecho a la ciudad.</p>
             </div>
         </section>
         <section class="step" data-step="17">
@@ -826,9 +852,21 @@
                         <img src="assets/graf4.png" alt="Gráfico 4" loading="lazy" decoding="async">
                     </figure>
                 </div>
+                <div class="step-content">
+                
+                <p style="font-size: 18px; line-height: 1.7;">En cinco <strong>décadas</strong>, <strong>Cancún</strong> pasó de 4,342 habitantes en 1970 a más de 911 mil en 2020. Este <strong>incremento</strong> del 441% en los setenta y del 375% en los noventa convirtió a nuestro <strong>municipio</strong> en uno de los territorios más <strong>dinámicos</strong> de <strong>América Latina</strong>. Esta <strong>urbanización acelerada</strong> desafió la capacidad de la <strong>planeación pública</strong>, pero también muestra la <strong>fuerza</strong> y <strong>resiliencia</strong> de quienes han hecho de Cancún su <strong>hogar</strong>. Cada <strong>familia</strong> y cada <strong>migrante</strong> ha aportado al <strong>carácter único</strong> de la <strong>ciudad</strong>, construyendo un <strong>territorio de oportunidades</strong> y <strong>contrastes</strong>.</p>
+            </div>
             </div>
         </section>
-        <section class="step" data-step="19"></section>
+        <section class="step" data-step="19">
+            <!-- Video superior (mismo ancho que la columna de lectura) -->
+            <div class="video-wrapper step19-media">
+                <video class="responsive-video" src="assets/videostep19.mp4" playsinline muted autoplay loop preload="metadata" aria-label="Video crecimiento urbano de Cancún, expansión y consolidación"></video>
+            </div>
+            <div class="step-content">
+                <p style="font-size: 18px; line-height: 1.7;">“El crecimiento poblacional se tradujo en expansión física: entre <strong>1984 y 1990</strong> la superficie urbana casi se <strong>duplicó</strong>, y entre <strong>2000 y 2010</strong> la mancha urbana se multiplicó en <strong>145%</strong>. Aunque en la última década el ritmo bajó al <strong>34%</strong>, la ciudad siguió consumiendo suelo más rápido que su población. El <strong>modelo expansivo</strong> ha privilegiado la <strong>extensión</strong> sobre la <strong>consolidación</strong>, generando <strong>altos costos</strong> de infraestructura y servicios. Pero este reto es también una oportunidad: <strong>consolidar</strong> la ciudad existente, hacerla más <strong>eficiente</strong> y <strong>compacta</strong>, y aprovechar mejor cada metro cuadrado de <strong>suelo urbano</strong>.”</p>
+            </div>
+        </section>
         <section class="step" data-step="20"></section>
         <section class="step" data-step="21"></section>
         <section class="step" data-step="22"></section>
